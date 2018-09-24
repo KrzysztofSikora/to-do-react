@@ -1,38 +1,20 @@
 import * as React from 'react';
 import {ITask} from "../../Models/ITask";
-import {LocalStorageService} from "../../Services/LocalStorage";
 import {TaskItem} from "./TaskItem";
 
-interface ITasksWrapperState {
+
+export interface ITasksWrapperProps {
     tasks: ITask[];
 }
 
-const initialState: ITasksWrapperState = {
-    tasks: []
-}
-
-export class TasksWrapper extends React.Component<{}, ITasksWrapperState> {
-
-    public constructor(props:{}) {
-        super(props);
-        this.state = initialState;
-    }
-
-    public componentDidMount() {
-        const service: LocalStorageService = new LocalStorageService();
-
-
-        this.setState({
-            tasks: service.get()
-        });
-    }
+export class TasksWrapper extends React.Component<ITasksWrapperProps> {
 
     public render() {
         return (
             <div>
-                {this.state.tasks.length}
+                {this.props.tasks.length}
                 {
-                    this.state.tasks.map(task => {
+                    this.props.tasks.map(task => {
                       return <TaskItem {...task} key={task.Id} />
                     })
                 }

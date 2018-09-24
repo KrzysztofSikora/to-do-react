@@ -6,23 +6,25 @@ export class LocalStorageService {
 
 
     constructor() {
-        for(let i: number = 0; i < 100; i++) {
-            this.tasks.push({
-                Id :i,
-                Name: `Task ${i}`,
-                CreatedAt: new Date(),
-                IsDone: i % 2 === 0,
-            });
+
+        const loadedTasks = window.localStorage.getItem('to-do-react-tasks');
+        if (loadedTasks) {
+            this.tasks = JSON.parse(loadedTasks);
+        } else {
+            this.seed();
         }
     }
 
 
-    get(): Array<ITask>{
-
+    getAll(): Array<ITask>{
         return this.tasks;
     }
 
-    update(id: number, task: ITask) {
+    getSingle(id: number): ITask | undefined {
+        return this.tasks.find(task => task.Id === id);
+    }
+
+    update(id: number, task: ITask): ITask | undefined {
 
         let targetIndex: number  | undefined = this.tasks.findIndex(task => task.Id === id);
 
@@ -32,9 +34,21 @@ export class LocalStorageService {
         }
         console.log(this.tasks)
         this.save()
+        return this.tasks[targetIndex];
     }
 
     save() {
         window.localStorage.setItem('to-do-react-tasks', JSON.stringify(this.tasks))
+    }
+
+    private seed() {
+        for(let i: number = 0; i < 100; i++) {
+            this.tasks.push({
+                Id :i,
+                Name: `Task ${i}`,
+                CreatedAt: new Date(),
+                IsDone: i % 2 === 0,
+            });
+        }
     }
 }

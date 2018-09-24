@@ -1,12 +1,21 @@
 import * as React from 'react';
 import './App.css';
 
-import { TasksWrapper } from "./Components/Pure/TasksWrapper";
+import {Provider} from "react-redux";
+import {MainStore} from "./MainStore";
+import {TasksWrapperConnected} from "./Components/Connected/TasksWrapperConnected";
 
 class App extends React.Component {
-  public render() {
+
+    public componentDidMount() {
+        MainStore.dispatch(TodoActions.GetAll());
+    }
+
+    public render() {
     return (
-      <TasksWrapper/>
+        <Provider store={MainStore}>
+          <TasksWrapperConnected />
+        </Provider>
     );
   }
 }

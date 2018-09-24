@@ -11,7 +11,8 @@ export class TaskItem extends React.Component <ITask, ITask> {
     constructor(props: ITask) {
         super(props);
 
-        this.state = props;
+        this.state = props
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
 
@@ -21,25 +22,25 @@ export class TaskItem extends React.Component <ITask, ITask> {
                 <input
                     type="checkbox"
                     checked={this.state.IsDone}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        const newState: ITask = {
-                            ...this.state,
-                            IsDone: event.target.checked
-                        }
-
-                        this.setState(newState)
-
-
-                        const service: LocalStorageService = new LocalStorageService();
-                        service.update(this.props.Id, newState);
-                    }}
+                    onChange={this.handleUpdate}
                 />
-                <p
-                    onClick={(event)=> {
-                        console.log(this.state)
-                    }}>
+                <p>
+
                     {this.props.Name}</p>
             </div>
         );
+    }
+
+
+    private handleUpdate(event: React.ChangeEvent<HTMLInputElement>) {
+        const newState: ITask = {
+            ...this.state,
+            IsDone: event.target.checked
+        };
+
+        this.setState(newState);
+        const service: LocalStorageService = new LocalStorageService();
+        service.update(this.props.Id, newState);
+
     }
 }
