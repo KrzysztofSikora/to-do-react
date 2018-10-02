@@ -4,11 +4,13 @@ import './App.css';
 import {Provider} from "react-redux";
 import {MainStore} from "./MainStore";
 import {TasksWrapperConnected} from "./Components/Connected/TasksWrapperConnected";
+import {ToDoActions} from "./Components/Actions/ToDoActions";
+
 
 class App extends React.Component {
 
     public componentDidMount() {
-        MainStore.dispatch(TodoActions.GetAll());
+        MainStore.dispatch(ToDoActions.GetAll());
     }
 
     public render() {

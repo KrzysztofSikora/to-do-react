@@ -17,7 +17,7 @@ export class ToDoActions {
     public static GetAll(): IToDoActions {
         const service: LocalStorageService = new LocalStorageService();
         return {
-            type: ToDoActionsTypes.ToDoActionsGetAll,
+            type: ToDoActionTypes.ToDoActionsGetAll,
             payload: service.getAll()
         };
     }
@@ -30,6 +30,16 @@ export class ToDoActions {
         return {
             type: ToDoActionTypes.ToDoActionsUpdate,
             payload: updatedTask
+        };
+    }
+
+    public static Delete(id: number): IToDoActions {
+        const service: LocalStorageService = new LocalStorageService();
+        let deletedTask: ITask[] = service.remove(id);
+
+        return {
+            type: ToDoActionTypes.ToDoActionsRemove,
+            payload: deletedTask
         };
     }
 }

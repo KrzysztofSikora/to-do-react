@@ -1,7 +1,9 @@
-import {ITasksWrapperProps, TasksWrapper} from "../Pure/TasksWrapper";
+import {ITasksWrapperProps, TasksWrapper, ITasksWrapperMethods} from "../Pure/TasksWrapper";
 import * as React from "react";
 import {ApplicationState} from "../../MainStore";
 import {connect} from "react-redux";
+import {ToDoActions} from "../Actions/ToDoActions";
+import {ITask} from "../../Models/ITask";
 
 
 class _TasksWrapperConnected extends React.Component<ITasksWrapperProps> {
@@ -16,4 +18,11 @@ const mapStateToProps = (state: ApplicationState): ITasksWrapperProps  => {
     };
 };
 
-export  const TasksWrapperConnected = connect(mapStateToProps)(_TasksWrapperConnected);
+const mapDispatchToProps = (dispatch: Function): ITasksWrapperMethods => {
+    return {
+        onUpdated: (id: number, task: ITask) => dispatch(ToDoActions.Update(id, task)),
+        onDeleted: (id: number,) => dispatch(ToDoActions.Delete(id))
+    }
+}
+
+export  const TasksWrapperConnected = connect(mapStateToProps, mapDispatchToProps)(_TasksWrapperConnected);

@@ -1,0 +1,10 @@
+div.task-item > * {
+    display: inline-block;
+    min-width: 200px;
+}
+div.task-item > *:first-child {
+    min-width: 50px;
+}
+div.task-item > *:last-child {
+    min-width: 100px;
+}

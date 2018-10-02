@@ -41,6 +41,18 @@ export class LocalStorageService {
         window.localStorage.setItem('to-do-react-tasks', JSON.stringify(this.tasks))
     }
 
+    remove(id: number): ITask[] {
+        let targetIndex: number  | undefined = this.tasks.findIndex(task => task.Id === id);
+        let deleted: ITask[] = [];
+
+        if(targetIndex > -1) {
+            deleted = this.tasks.splice(targetIndex, 1);
+            this.save();
+        }
+
+        return deleted;
+    }
+
     private seed() {
         for(let i: number = 0; i < 100; i++) {
             this.tasks.push({
